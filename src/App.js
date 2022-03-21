@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
-
+import './List.css'
+import Login from './Login'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Reg from './Reg'
+import Fp from './Fp'
+import List from './List';
+import Profile from './Profile';
+import Mlist from './Mlist'
+import Am from './Am'
+import Userlist from './Userlist';
+import Editmedision from './Editmedision';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          {/* <Route exact path='/'component={List}/> */}
+          <Route exact path='/' component={Login} />
+          <Route exact path='/Reg' component={Reg} />
+          <Route exact path='/Fp' component={Fp} />
+          <Route exact path='/Profile' component={Profile}/>
+          <Route exact path='/Mlist' component={Mlist}/>
+          <Route exact path='/addmedicine' component={Am}/>
+          <Route exact path='/Userlist' component={Userlist}/>
+          <Route exact path='/Editmedicine/:id' component={Editmedision}/>
+
+        </Switch>
+
+      </Router>
+
     </div>
   );
 }
