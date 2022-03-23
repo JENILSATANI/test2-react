@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import MaterialTable from 'material-table';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
@@ -76,7 +77,7 @@ function Copy() {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
+              <a class="nav-link" href="/">Login</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="Userlist">User List</a>

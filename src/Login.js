@@ -40,9 +40,9 @@ function Login() {
         })
     }
 
-    function postdata() {
+    function postdata(e) {
         handleClick()
-        // e.preventDefault();
+        e.preventDefault();
         let item = {
             email: values.email,
             password: values.password
@@ -50,10 +50,12 @@ function Login() {
         console.log(item)
         axios.post("http://localhost:9900/login", item).then((res) => {
             console.log("updare", res)
-        
+            if (res.data.success === true) {
+                localStorage.setItem("token", res.data.token)
+                history.push('/Mlist')
+            }        
         })
-        history.push('/Mlist')
-
+        
     }
     const handleClick = (Transition) => {
         setTransition(() => Transition);

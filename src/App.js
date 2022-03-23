@@ -4,7 +4,7 @@ import Login from './Login'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Reg from './Reg'
 import Fp from './Fp'
-import List from './List';
+import For from './For';
 import Profile from './Profile';
 import Mlist from './Mlist'
 import Am from './Am'
