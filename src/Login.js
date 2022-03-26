@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react'
 import { Grid, Paper, TextField } from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom';
+    import { Link, useHistory } from 'react-router-dom';
 import { omit } from 'lodash'
 import { Button } from 'react-bootstrap'
 import axios from 'axios';
@@ -51,8 +51,8 @@ function Login() {
         axios.post("http://localhost:9900/login", item).then((res) => {
             console.log("updare", res)
             if (res.data.success === true) {
-                localStorage.setItem("token", res.data.token)
-                history.push('/Mlist')
+                localStorage.setItem("token", res.data.token) 
+                history.push('/Userlist')
             }        
         })
         
@@ -144,7 +144,7 @@ function Login() {
                         </Grid>
                         <br />
                         <Grid align='center'>
-                            <Link to='/Reg'>New Register</Link>
+                            <Link to='/reg'>New Register</Link>
                         </Grid>
                         <br />
                         <Grid align='center'>

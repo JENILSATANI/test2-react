@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useHistory, useParams } from "react-router-dom";
+import { Link,useHistory, useParams } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import { TextField } from '@material-ui/core';
 export default function Pp() {
     const { id } = useParams();
     let history = useHistory();
 
-    const [name, setName] = useState('');
-    const [email, setemail] = useState('');
-    const [phonenumber, setphonenumber] = useState('');
+    const [name, setName] = useState("data");
+    const [email, setemail] = useState("data");
+    const [phonenumber, setphonenumber] = useState("data");
     const [profile, setProfile] = useState([]);
     useEffect(() => {
         data()
@@ -17,34 +17,42 @@ export default function Pp() {
 
 
     function data() {
-        axios.get(`http://localhost:9900/`).then((res) => {
-            setName(res.data.data.username)
-            setemail(res.data.data.email)
-            setphonenumber(res.data.data.mobilenumber)
-            setProfile(res.data.data.photo_path)
+        let token = localStorage.getItem("token");
+
+        axios.get(`http://localhost:9900/user`, { headers: { 'x-access-token': token } }).then((res) => {
+            setName(res.data.data[0].username)
+            setemail(res.data.data[0].email)
+            setphonenumber(res.data.data[0].mobilenumber)
+            setProfile(res.data.data[0].photo_path)
             console.log("hbhj", res)
         })
     }
 
-
-
     const postData = () => {
+        let token = localStorage.getItem("token");
+
         let FD = new FormData();
         FD.append('username', name);
-        FD.append('email',email)
-        FD.append('mobilenumber',phonenumber)
+        FD.append('email', email)
+        FD.append('mobilenumber', phonenumber)
         FD.append('photo', profile[0]);
         console.log("profile", profile);
-        axios.put(`http://localhost:9900/edit/${id}`, FD)
-        history.push('/Mlist')
+        axios.put(`http://localhost:9900/user/`, FD, { headers: { 'x-access-token': token } })
+        history.push('/Userlist')
 
+    }
+    function logout(){
+        localStorage.clear()
+        history.push('/')
     }
 
     return (
         <div>
+
             <div className='Container'>
-            <img src={profile} alt='' height='100' width='100'></img>
+                <img src={profile} alt='' height='100' width='100'></img>
                 <form>
+                    {data}
                     <div>
                         <TextField value={name}
                             onChange={(e) => setName(e.target.value)}
@@ -62,16 +70,19 @@ export default function Pp() {
                     </div>
                     <br />
                     <div>
-                        <TextField value={phonenumber} 
-                        onChange={(e) => setphonenumber(e.target.value)} 
-                        variant='standard'
-                        label='Mobilenumber'
+                        <TextField value={phonenumber}
+                            onChange={(e) => setphonenumber(e.target.value)}
+                            variant='standard'
+                            label='Mobilenumber'
                         />
                     </div>
                     <br />
-  
+                    <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} />
+                    <br />
+                    <br/>
+                    <button onClick={postData}  className="bg-primary"type='submit'>Submit</button><span></span>
+                    <button className="bg-primary" onClick={logout}>Logout</button>
 
-                    <Button onClick={postData} type='submit'>Submit</Button>
                 </form>
             </div>
         </div>

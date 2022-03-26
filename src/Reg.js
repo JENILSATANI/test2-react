@@ -1,3 +1,5 @@
+
+  
 /* eslint-disable default-case */
 import React, { useEffect, useState } from 'react'
 import { Grid, Paper, TextField } from '@material-ui/core'
@@ -10,31 +12,33 @@ const Om = () => {
     const [email, setEmail] = useState(true);
     const [password, setPassword] = useState(true);
     const [phone, setphone] = useState(true)
+    const [profile, setProfile] = useState([]);
 
     let history = useHistory()
     const [errors, setErrors] = useState('');
     const [values, setValues] = useState({
-        name: '',
+        username: '',
         email: "",
         phone: "",
-        password: ''
+        password: '',
+        profile:""
     })
     const { id } = useParams()
 
     const validate = (event, name, value) => {
 
         switch (name) {
-            case 'name':
+            case 'username':
                 if (
                     !new RegExp(/^(([a-zA-Z]{3,20})+[ ]+([a-zA-Z]{3,20})+)+$/).test(value)
                 ) {
                     setErrors({
                         ...errors,
-                        name: 'Name must be at least 3 characters, max 30, no special characters or numbers, must have space in between name.'
+                        username: 'Name must be at least 3 characters, max 30, no special characters or numbers, must have space in between name.'
                     })
                 } else {
 
-                    let newObj = omit(errors, "name");
+                    let newObj = omit(errors, "username");
                     setErrors(newObj);
 
                 }
@@ -99,23 +103,28 @@ const Om = () => {
             ...values,
             [name]: val,
         })
+        // setProfile
 
     }
-    function postdata() {
-        let item = {
-            name: values.name,
-            email: values.email,
-            mobilenumber: values.mobilenumber,
-            password: values.password
+    const postdata =(e) => {
+        e.preventDefault()
+        let FD = new FormData();
+            FD.append('username' , values.username)
+            FD.append('mobilenumber' , values.phone)
+            FD.append('email' , values.email)
+            FD.append('password' , values.password)
+            FD.append('photo' , profile[0])
+            console.log("ss",profile)
+
+            console.log(FD)
+            axios.post("http://localhost:9900/per", FD).then((res) => {
+                console.log("updare", res)
+            })
+            history.push('/')
         }
-        console.log(item)
-        axios.post("http://localhost:9900/", item).then((res) => {
-            console.log("updare", res)
-        })
-        history.push('/')
 
 
-    }
+    
     const paperStyle = { padding: '30px 20px', width: 300, margin: '20px auto' }
 
 
@@ -128,11 +137,13 @@ const Om = () => {
                         <h2> Registation Form</h2>
                     </Grid>
                     <form>
-                        <TextField name='name' fullWidth label='Name' value={values.name} onChange={handleChange} error={Boolean(errors.name)} helperText={errors.name} />
+                        <TextField name='username' fullWidth label='username' value={values.username} onChange={handleChange} error={Boolean(errors.username)} helperText={errors.username} />
                         <TextField name='phone' fullWidth label='phone' value={values.phone} onChange={handleChange} error={Boolean(errors.phone)} helperText={errors.phone} />
                         <TextField name='email' fullWidth label='Email' value={values.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} />
                         <TextField name='password' fullWidth label='password' value={values.password} onChange={handleChange} error={Boolean(errors.password)} helperText={errors.password} />
                         <br />
+                        <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} />
+
                         <br />
                         <Grid align='center'>
                             <Button type='submit' class='btn btn-info' onClick={postdata}>Submit</Button>

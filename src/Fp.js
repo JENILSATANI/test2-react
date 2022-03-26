@@ -9,6 +9,8 @@ import {
     StepLabel,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
+import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -61,11 +63,16 @@ function getStepContent(step) {
 }
 
 const LinaerStepper = () => {
+    let history = useHistory()
     const classes = useStyles();
     const [activeStep, setActiveStep] = useState(0);
     const [skippedSteps, setSkippedSteps] = useState([]);
     const steps = getSteps();
-
+    const [errors, setErrors] = useState('');
+    const [values, setValues] = useState({
+        email: '',
+        password: ''
+    })
     const isStepOptional = (step) => {
         return step === 1 || step === 2;
     };
@@ -75,11 +82,22 @@ const LinaerStepper = () => {
     };
 
     const handleNext = () => {
+    
         setActiveStep(activeStep + 1);
         setSkippedSteps(skippedSteps.filter((skipItem) => skipItem !== activeStep));
-    };
+        let item = {
+            email: values.email,
+            password: values.password
+          }
+        axios.put(`http://localhost:9900/savepassword`, item).then((res)=>{
+            console.log("ressssssss", res)
+        })
+        };
 
-    const handleBack = () => {
+        const isLastStep = () => {
+            if (activeStep === steps.length) window.location.href = '\booking';
+            return false;
+          };    const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
 
@@ -103,7 +121,7 @@ const LinaerStepper = () => {
                                 align="center"
                                 style={{ display: "block" }}
                             >
-                                optional
+                                
                             </Typography>
                         );
                     }
