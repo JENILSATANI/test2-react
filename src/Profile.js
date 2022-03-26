@@ -20,10 +20,10 @@ export default function Pp() {
         let token = localStorage.getItem("token");
 
         axios.get(`http://localhost:9900/user`, { headers: { 'x-access-token': token } }).then((res) => {
-            setName(res.data.data[0].username)
-            setemail(res.data.data[0].email)
-            setphonenumber(res.data.data[0].mobilenumber)
-            setProfile(res.data.data[0].photo_path)
+            setName(res.data.data.username)
+            setemail(res.data.data.email)
+            setphonenumber(res.data.data.mobilenumber)
+            setProfile(res.data.data.photo_path)
             console.log("hbhj", res)
         })
     }
