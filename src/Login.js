@@ -2,19 +2,21 @@
 /* eslint-disable no-useless-escape */
 
 import React, { useState } from 'react'
-import { Grid, Paper, TextField } from '@material-ui/core'
-    import { Link, useHistory } from 'react-router-dom';
+import { Grid, Paper, TextField, IconButton, InputAdornment } from '@material-ui/core'
+import { Link, useHistory} from 'react-router-dom';
 import { omit } from 'lodash'
 import { Button } from 'react-bootstrap'
 import axios from 'axios';
 import Snackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 function Login() {
 
     let history = useHistory()
     const [open, setOpen] = React.useState(false);
     const [transition, setTransition] = React.useState(undefined);
+    const [password, setpassword] = useState(false)
 
     const [errors, setErrors] = useState('');
     const [values, setValues] = useState({
@@ -24,6 +26,7 @@ function Login() {
         password: ''
     })
 
+    const url=''
     function TransitionLeft(props) {
         return <Slide {...props} direction="left" />;
     }
@@ -48,14 +51,21 @@ function Login() {
             password: values.password
         }
         console.log(item)
-        axios.post("http://localhost:9900/login", item).then((res) => {
+        axios.post("https://medicinesinfo.herokuapp.com/login", item).then((res) => {
             console.log("updare", res)
             if (res.data.success === true) {
-                localStorage.setItem("token", res.data.token) 
-                history.push('/Userlist')
-            }        
+                localStorage.setItem("token", res.data.token)
+                // history.push('/Userlist')
+                window.location.reload(true);
+            }
         })
-        
+
+    }
+    const handleonclick = () => {
+        setpassword(!password)
+    }
+    const handleonmousedown = () => {
+        setpassword(!password)
     }
     const handleClick = (Transition) => {
         setTransition(() => Transition);
@@ -65,6 +75,7 @@ function Login() {
     const handleClose = () => {
         setOpen(false);
     };
+    
     const validate = (event, name, value) => {
         switch (name) {
             case 'email':
@@ -124,22 +135,36 @@ function Login() {
                             variant='filled'
                             fullWidth label='password'
                             value={values.password}
+                            type={password ? 'text' : 'password'}
                             onChange={handleChange}
                             error={Boolean(errors.password)}
                             helperText={errors.password}
+                            InputProps={{
+                                endAdornment:(
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                        
+                                        onClick={handleonclick}
+                                        onMouseDown={handleonmousedown}
+                                        >
+                                        {password?<VisibilityIcon/>:<VisibilityOffIcon/>}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
                         />
                         <br />
                         <br />
                         <Grid align='center'>
                             <Button type='submit' onClick={postdata}>
-                             Submit
-                             <Snackbar
-                                        open={open}
-                                        onClose={handleClose}
-                                        TransitionComponent={transition}
-                                        message="email and password required"
-                                        key={transition ? transition.name : ''}
-                                    />
+                                Submit
+                                <Snackbar
+                                    open={open}
+                                    onClose={handleClose}
+                                    TransitionComponent={transition}
+                                    message="Login Success.."
+                                    key={transition ? transition.name : ''}
+                                />
                             </Button>
                         </Grid>
                         <br />

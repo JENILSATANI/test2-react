@@ -9,7 +9,9 @@ import Avatar from '@mui/material/Avatar';
 function NoteCard({ note, handleclick }) {
     return (
         <div>
+           
             <Card style={{ width: "100%", height: "100%" }}>
+                
                 <CardHeader
                     avatar={
                         <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -36,7 +38,7 @@ function NoteCard({ note, handleclick }) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="large">Know More</Button>
+                <a href="addmedicine" class="btn btn-primary">Add Medicine</a>
 
                 </CardActions>
 

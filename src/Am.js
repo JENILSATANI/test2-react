@@ -24,7 +24,7 @@ export default function Pp() {
         FD.append('price', price);
         FD.append('photo', profile[0]);
         console.log("profile", profile);
-        axios.post('http://localhost:9900/adduser', FD)
+        axios.post('https://medicinesinfo.herokuapp.com/adduser', FD)
         history.push('/Mlist')
 
     }

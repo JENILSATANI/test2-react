@@ -14,7 +14,7 @@ function Copy() {
     function data() {
         let token = localStorage.getItem("token");
 
-        axios.get(`http://localhost:9900/user`, { headers: { 'x-access-token': token } })
+        axios.get(`https://medicinesinfo.herokuapp.com/users`, { headers: { 'x-access-token': token } })
             .then(res => {
                 console.log(res)
                 const tableData = res.data.data
@@ -29,7 +29,7 @@ function Copy() {
     function deleteuser(_id) {
         console.log(_id);
         let token = localStorage.getItem("token");
-        axios.delete(`http://localhost:9900/de/${_id}`, { headers: { 'x-access-token': token } }).then((result) => {
+        axios.delete(`https://medicinesinfo.herokuapp.com/de/${_id}`, { headers: { 'x-access-token': token } }).then((result) => {
             console.log("result.data", result);
             data()
 
@@ -46,10 +46,10 @@ function Copy() {
             title: "email", field: "email"
 
         },
-        {
-            title: "mobilenumber", field: "mobilenumber"
+        // {
+        //     title: "mobilenumber", field: "mobilenumber"
 
-        },
+        // },
         {
             title: "User Image", field: "photo_path", render: (rowData) => <img src={rowData.photo_path} style={{ width: 60, height: 60 }} alt='' />,
 
@@ -70,7 +70,7 @@ function Copy() {
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="/">Login</a>
+                                <a class="nav-link" href="Profile">Logout</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="Userlist">User List</a>

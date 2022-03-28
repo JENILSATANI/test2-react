@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link,useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import { TextField } from '@material-ui/core';
 export default function Pp() {
     const { id } = useParams();
     let history = useHistory();
-
     const [name, setName] = useState("data");
     const [email, setemail] = useState("data");
     const [phonenumber, setphonenumber] = useState("data");
@@ -16,10 +15,12 @@ export default function Pp() {
     }, [])
 
 
+
+
     function data() {
         let token = localStorage.getItem("token");
 
-        axios.get(`http://localhost:9900/user`, { headers: { 'x-access-token': token } }).then((res) => {
+        axios.get(`https://medicinesinfo.herokuapp.com/user`, { headers: { 'x-access-token': token } }).then((res) => {
             setName(res.data.data.username)
             setemail(res.data.data.email)
             setphonenumber(res.data.data.mobilenumber)
@@ -37,13 +38,16 @@ export default function Pp() {
         FD.append('mobilenumber', phonenumber)
         FD.append('photo', profile[0]);
         console.log("profile", profile);
-        axios.put(`http://localhost:9900/user/`, FD, { headers: { 'x-access-token': token } })
+        axios.put(`url/user`, FD, { headers: { 'x-access-token': token } })
         history.push('/Userlist')
 
     }
-    function logout(){
+    function logout() {
         localStorage.clear()
-        history.push('/')
+        setTimeout(() => {
+
+            history.push('/')
+        }, 1000);
     }
 
     return (
@@ -79,8 +83,8 @@ export default function Pp() {
                     <br />
                     <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} />
                     <br />
-                    <br/>
-                    <button onClick={postData}  className="bg-primary"type='submit'>Submit</button><span></span>
+                    <br />
+                    <button onClick={postData} className="bg-primary" type='submit'>Submit</button><span></span>
                     <button className="bg-primary" onClick={logout}>Logout</button>
 
                 </form>

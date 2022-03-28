@@ -18,7 +18,7 @@ export default function Pp() {
 
 
     function data() {
-        axios.get(`http://localhost:9900/get/${id}`).then((res) => {
+        axios.get(`https://medicinesinfo.herokuapp.com/get/${id}`).then((res) => {
             setName(res.data.data.name)
             setprice(res.data.data.price)
             setquantities(res.data.data.quantities)
@@ -38,7 +38,7 @@ export default function Pp() {
         FD.append('price', price);
         FD.append('photo', profile[0]);
         console.log("profile", profile);
-        axios.put(`http://localhost:9900/edit/${id}`, FD)
+        axios.put(`https://medicinesinfo.herokuapp.com/edit/${id}`, FD)
         history.push('/Mlist')
 
     }

@@ -12,45 +12,45 @@ import Userlist from './Userlist';
 import Editmedision from './Editmedision';
 import Logout from './Logout';
 
-// const currentUserSubject = localStorage.getItem('token');
+const currentUserSubject = localStorage.getItem('token');
 
-// const PrivateRoute = ({ component: Component, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={props =>
-//       currentUserSubject ? (
-//         <Component {...props} />
-//       ) : (
-//         <Redirect
-//           from=''
-//           to={{
-//             pathname: "/"
-//           }}
-//           noThrow
-//         />
-//       )
-//     }
-//   />
-// );
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      currentUserSubject ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          from=''
+          to={{
+            pathname: "/"
+          }}
+          noThrow
+        />
+      )
+    }
+  />
+);
 
-// const PublicRoute = ({ component: Component, ...rest }) => (
-//   <Route
-//     {...rest}
-//     render={props =>
-//       currentUserSubject === null ? (
-//         <Component {...props} />
-//       ) : (
-//         <Redirect
-//           from=''
-//           to={{
-//             pathname: "/Mlist"
-//           }}
-//           noThrow
-//         />
-//       )
-//     }
-//   />
-// );
+const PublicRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      currentUserSubject === null ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          from=''
+          to={{
+            pathname: "/Userlist"
+          }}
+          noThrow
+        />
+      )
+    }
+  />
+);
 
 function App() {
   return (
@@ -58,15 +58,15 @@ function App() {
       <Router>
         <Switch>
           {/* <Route exact path='/'component={List}/> */}
-          <Route exact path='/' component={Login} />
-          <Route exact path='/reg' component={Reg} />
-          <Route exact path='/Fp' component={Fp} />
-          <Route exact path='/Profile' component={Profile} />
-          <Route exact path='/Mlist' component={Mlist} />
-          <Route exact path='/addmedicine' component={Am} />
-          <Route exact path='/Userlist' component={Userlist} />
-          <Route exact path='/Editmedicine/:id' component={Editmedision} />
-          <Route exact path='/Logout' component={Logout} />
+          <PublicRoute exact path='/' component={Login} />
+          <PublicRoute path='/reg' component={Reg} />
+          <PublicRoute path='/Fp' component={Fp} />
+          <PrivateRoute path='/Profile' component={Profile} />
+          <PrivateRoute path='/Mlist' component={Mlist} />
+          <PrivateRoute path='/addmedicine' component={Am} />
+          <PrivateRoute path='/Userlist' component={Userlist} />
+          <PrivateRoute path='/Editmedicine/:id' component={Editmedision} />
+          <PrivateRoute path='/Logout' component={Logout} />
 
 
         </Switch>

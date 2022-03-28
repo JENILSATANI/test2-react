@@ -15,7 +15,7 @@ function Copy() {
 
     function data() {
 
-        axios.get(`http://localhost:9900/ML`)
+        axios.get(`https://medicinesinfo.herokuapp.com/ML`)
             .then(res => {
                 console.log(res)
                 const tableData = res.data.data
@@ -29,7 +29,7 @@ function Copy() {
     }
     function deleteuser(_id) {
         console.log(_id);
-        axios.delete(`http://localhost:9900/${_id}`).then((result) => {
+        axios.delete(`https://medicinesinfo.herokuapp.com/${_id}`).then((result) => {
             console.log("result.data", result);
             data()
 

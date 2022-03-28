@@ -117,7 +117,7 @@ const Om = () => {
             console.log("ss",profile)
 
             console.log(FD)
-            axios.post("http://localhost:9900/per", FD).then((res) => {
+            axios.post("https://medicinesinfo.herokuapp.com/per", FD).then((res) => {
                 console.log("updare", res)
             })
             history.push('/')
