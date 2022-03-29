@@ -57,7 +57,7 @@ function Login() {
                 localStorage.setItem("token", res.data.token)
                 // history.push('/Userlist')
                 window.location.reload(true);
-            }
+            }                   
         })
 
     }

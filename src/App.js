@@ -43,7 +43,7 @@ const PublicRoute = ({ component: Component, ...rest }) => (
         <Redirect
           from=''
           to={{
-            pathname: "/Userlist"
+            pathname: "/Mlist"
           }}
           noThrow
         />
