@@ -11,6 +11,7 @@ import Am from './Am'
 import Userlist from './Userlist';
 import Editmedision from './Editmedision';
 import Logout from './Logout';
+import Log from './Log';
 
 const currentUserSubject = localStorage.getItem('token');
 
@@ -55,10 +56,11 @@ const PublicRoute = ({ component: Component, ...rest }) => (
 function App() {
   return (
     <div className="App">
+        {/* <Log/> */}
       <Router>
         <Switch>
-          {/* <Route exact path='/'component={List}/> */}
-          <PublicRoute exact path='/' component={Login} />
+        
+          <PublicRoute exact path='/' component={Log} />
           <PublicRoute path='/reg' component={Reg} />
           <PublicRoute path='/Fp' component={Fp} />
           <PrivateRoute path='/Profile' component={Profile} />

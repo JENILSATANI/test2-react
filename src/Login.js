@@ -26,7 +26,6 @@ function Login() {
         password: ''
     })
 
-    const url=''
     function TransitionLeft(props) {
         return <Slide {...props} direction="left" />;
     }
@@ -169,7 +168,7 @@ function Login() {
                         </Grid>
                         <br />
                         <Grid align='center'>
-                            <Link to='/reg'>New Register</Link>
+                            <Link to='/reg'>Not a member? Register</Link>
                         </Grid>
                         <br />
                         <Grid align='center'>
