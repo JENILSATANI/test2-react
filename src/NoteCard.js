@@ -1,10 +1,11 @@
-import { Button, Card, CardActions, CardContent, CardHeader, IconButton } from '@material-ui/core'
+import { Grid, Card, CardActions, CardContent, CardHeader, IconButton } from '@material-ui/core'
 import { DeblurOutlined, DeleteOutline, Favorite } from '@mui/icons-material'
 import { Typography } from '@mui/material'
 import React from 'react'
 import { styled } from '@mui/material/styles';
 import { red } from '@mui/material/colors';
 import Avatar from '@mui/material/Avatar';
+import { Link, useHistory} from 'react-router-dom';
 
 function NoteCard({ note, handleclick }) {
     return (
@@ -28,7 +29,7 @@ function NoteCard({ note, handleclick }) {
 
                 <CardContent>   
                     <Typography>
-                        <img src={note.photo_path} alt='' />
+                        <img src={note.photo_path} alt=''  />
                     </Typography><Typography>
                         {note.description}
                     </Typography>
@@ -38,9 +39,13 @@ function NoteCard({ note, handleclick }) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                <a href="addmedicine" class="btn btn-primary">Add Medicine</a>
-
-                </CardActions>
+                <Grid align='center'>
+                            <Link to='/addmedicine' style={{background:"black"}}>AddMedicine</Link>
+                        </Grid>
+                             <Grid align='center'>
+                            <Link to='/Profile'style={{background:"black"}}>Back</Link>
+                        </Grid>
+                </CardActions>   
 
             </Card>
 

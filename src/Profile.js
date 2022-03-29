@@ -3,12 +3,17 @@ import axios from 'axios';
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import { TextField } from '@material-ui/core';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import InputAdornment from '@mui/material/InputAdornment';
+import MailIcon from '@mui/icons-material/Mail';
+import PhoneIcon from '@mui/icons-material/Phone';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 export default function Pp() {
     const { id } = useParams();
     let history = useHistory();
-    const [name, setName] = useState("data");
-    const [email, setemail] = useState("data");
-    const [phonenumber, setphonenumber] = useState("data");
+    const [name, setName] = useState("");
+    const [email, setemail] = useState("");
+    const [phonenumber, setphonenumber] = useState("");
     const [profile, setProfile] = useState([]);
     useEffect(() => {
         data()
@@ -45,8 +50,8 @@ export default function Pp() {
     function logout() {
         localStorage.clear()
         setTimeout(() => {
+            window.location.reload(true);
 
-            history.push('/')
         }, 1000);
     }
 
@@ -54,38 +59,81 @@ export default function Pp() {
         <div>
 
             <div className='Container'>
-                <img src={profile} alt='' height='100' width='100'></img>
+                <img src={profile} alt='' height='200' width='200'className='img-fluid rounded' ></img>
+                <br />
                 <form>
-                    {data}
                     <div>
-                        <TextField value={name}
+                        <TextField
+                            value={name}
+                            id="input-with-icon-textfield"
                             onChange={(e) => setName(e.target.value)}
-                            variant='standard'
+                            variant='outlined'
                             label='Username'
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <AccountCircle />
+                                    </InputAdornment>
+                                ),
+                            }}
+
                         />
+
                     </div>
                     <br />
                     <div>
-                        <TextField value={email}
+                        <TextField
+                            value={email}
+                            id="input-with-icon-textfield"
                             onChange={(e) => setemail(e.target.value)}
-                            variant='standard'
+                            variant='outlined'
                             label='email'
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <MailIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+
                         />
                     </div>
                     <br />
                     <div>
-                        <TextField value={phonenumber}
+                        <TextField
+                            value={phonenumber}
+                            id="input-with-icon-textfield"
                             onChange={(e) => setphonenumber(e.target.value)}
-                            variant='standard'
+                            variant='outlined'
                             label='Mobilenumber'
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <PhoneIcon />
+                                    </InputAdornment>
+                                ),
+                            }}
+
                         />
                     </div>
                     <br />
-                    <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} />
+                    <TextField
+                        variant='outlined'
+                        type='file' name='photo'
+                        label='ImageUpload'
+                        onChange={(e) => setProfile(e.target.files)}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <UploadFileIcon />
+                                </InputAdornment>
+                            ),
+                        }} />
                     <br />
                     <br />
-                    <button onClick={postData} className="bg-primary" type='submit'>Submit</button><span></span>
-                    <button className="bg-primary" onClick={logout}>Logout</button>
+
+                    <Button onClick={postData} className="bg-success" type='submit'>Submit</Button><span/>
+                    <Button className="bg-primary" onClick={logout}>Logout</Button>
 
                 </form>
             </div>
