@@ -29,7 +29,7 @@ function NoteCard({ note, handleclick }) {
 
                 <CardContent>   
                     <Typography>
-                        <img src={note.photo_path} alt=''  />
+                        <img src={note.photo_path} alt=''style={{ width: 120, height: 100}}  />
                     </Typography><Typography>
                         {note.description}
                     </Typography>
