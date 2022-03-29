@@ -38,7 +38,7 @@ export default function Pp() {
         FD.append('mobilenumber', phonenumber)
         FD.append('photo', profile[0]);
         console.log("profile", profile);
-        axios.put(`url/user`, FD, { headers: { 'x-access-token': token } })
+        axios.put(`https://medicinesinfo.herokuapp.com/user`, FD, { headers: { 'x-access-token': token } })
         history.push('/Userlist')
 
     }
