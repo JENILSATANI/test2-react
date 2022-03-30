@@ -105,7 +105,7 @@ function Log() {
         <div>
             <section className="vh-100" style={{ backgroundcolor: "#9A616D" }}>
                 <div className="container py-5 h-100">
-                    <div className="row d-flex justify-content-center align-items-center h-100">
+                    <div className="row d-flex align-items-center justify-content-center h-100">
                         <div className="col col-xl-10">
                             <div className="card" style={{ borderradius: "1rem" }}>
                                 <div className="row g-0">
