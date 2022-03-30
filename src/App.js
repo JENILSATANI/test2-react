@@ -1,6 +1,6 @@
 import './App.css';
 import './List.css'
-import Login from './Login'
+import Rendering from './Rendering'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Reg from './Reg'
 import Fp from './Fp'
@@ -12,6 +12,7 @@ import Userlist from './Userlist';
 import Editmedision from './Editmedision';
 import Logout from './Logout';
 import Log from './Log';
+import Otp from './Otp';
 
 const currentUserSubject = localStorage.getItem('token');
 
@@ -56,13 +57,14 @@ const PublicRoute = ({ component: Component, ...rest }) => (
 function App() {
   return (
     <div className="App">
-        {/* <Log/> */}
+        {/* <Rendering/> */}
       <Router>
         <Switch>
         
           <PublicRoute exact path='/' component={Log} />
           <PublicRoute path='/reg' component={Reg} />
           <PublicRoute path='/Fp' component={Fp} />
+          <PublicRoute path='/Otp' component={Otp} />
           <PrivateRoute path='/Profile' component={Profile} />
           <PrivateRoute path='/Mlist' component={Mlist} />
           <PrivateRoute path='/addmedicine' component={Am} />

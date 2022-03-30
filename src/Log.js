@@ -11,11 +11,12 @@ import Snackbar from '@mui/material/Snackbar';
 import Slide from '@mui/material/Slide';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import EmailIcon from '@mui/icons-material/Email';
 function Log() {
     const [open, setOpen] = React.useState(false);
     const [transition, setTransition] = React.useState(undefined);
     const [password, setpassword] = useState(false)
-
+    let history = useHistory()
     const [errors, setErrors] = useState('');
     const [values, setValues] = useState({
         name: '',
@@ -94,6 +95,12 @@ function Log() {
         })
 
     }
+    function changedata() {
+        history.push('/')
+    }
+    function otpdta() {
+        history.push('/Otp')
+    }
     return (
         <div>
             <section className="vh-100" style={{ backgroundcolor: "#9A616D" }}>
@@ -119,8 +126,39 @@ function Log() {
                                                         <i className="fas fa-cubes fa-2x me-3" style={{ color: "#ff6219" }}></i>
                                                         <span className="h1 fw-bold mb-0">Medicine Management App</span>
                                                     </div>
-
                                                     <h5 className="fw-normal mb-3 pb-3" style={{ letterspacing: "1px" }}>Sign into your account</h5>
+                                                    <br />
+                                                    <div class="row d-flex justify-content-center align-items-center h-100" style={{ margin: "20" }}>
+
+                                                        <h5 class="mb-0 me-4">Login With:</h5>
+
+                                                        <div class="form-check form-check-inline mb-0 me-4">
+                                                            <input
+                                                                class="form-check-input"
+                                                                type="radio"
+                                                                name="inlineRadioOptions"
+                                                                value={1}
+                                                                onClick={(e) => changedata(e.target.value)}
+                                                            />
+                                                            <label class="form-check-label" for="EmailUser">Email</label>
+                                                        </div>
+
+                                                        <div class="form-check form-check-inline mb-0 me-6">
+                                                            <input
+                                                                class="form-check-input"
+                                                                type="radio"
+                                                                name="inlineRadioOptions"
+                                                                value={2}
+                                                                onClick={(e) => otpdta(e.target.value)}
+
+
+                                                            />
+                                                            <label class="form-check-label" for="maleGender">MobileNumber</label>
+                                                        </div>
+                                                    </div>
+                                                    <br />
+
+
 
                                                     <div className="form-outline mb-4">
                                                         <TextField
@@ -132,6 +170,15 @@ function Log() {
                                                             onChange={handleChange}
                                                             error={Boolean(errors.email)}
                                                             helperText={errors.email}
+                                                            InputProps={{
+                                                                endAdornment: (
+                                                                    <InputAdornment position='end'>
+                                                                        <IconButton>
+                                                                            <EmailIcon />
+                                                                        </IconButton>
+                                                                    </InputAdornment>
+                                                                )
+                                                            }}
                                                         />
                                                     </div>
                                                     <Grid>
@@ -165,7 +212,6 @@ function Log() {
                                                     <div className="pt-1 mb-4">
                                                         <button className="btn btn-dark btn-lg btn-block" type="button" onClick={postdata}>Login</button>
                                                     </div>
-
                                                     <a className="small text-muted" href="Fp">Forgot password?</a>
                                                     <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>Don't have an account? <a href="reg" style={{ color: "#393f81" }}>Register here</a></p>
                                                     <a href="#!" className="small text-muted">Terms of use.</a>

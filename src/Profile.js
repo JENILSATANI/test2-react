@@ -117,18 +117,8 @@ export default function Pp() {
                         />
                     </div>
                     <br />
-                    <TextField
-                        variant='outlined'
-                        type='file' name='photo'
-                        label='ImageUpload'
-                        onChange={(e) => setProfile(e.target.files)}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <UploadFileIcon />
-                                </InputAdornment>
-                            ),
-                        }} />
+                    <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} />
+
                     <br />
                     <br />
 

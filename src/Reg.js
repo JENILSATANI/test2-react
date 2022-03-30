@@ -1,18 +1,19 @@
-
-  
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable default-case */
 import React, { useEffect, useState } from 'react'
-import { Grid, Paper, TextField } from '@material-ui/core'
+import { Grid, Paper, TextField, InputAdornment, IconButton } from '@material-ui/core'
 import { Button } from 'react-bootstrap'
 import { useParams, useHistory, Link } from "react-router-dom"
 import axios from 'axios'
 import { omit } from 'lodash'
-const Om = () => {
-    const [name, setName] = useState(true);
-    const [email, setEmail] = useState(true);
-    const [password, setPassword] = useState(true);
-    const [phone, setphone] = useState(true)
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import PhoneIcon from '@mui/icons-material/Phone';
+import PersonIcon from '@mui/icons-material/Person';
+import EmailIcon from '@mui/icons-material/Email';
+function Rendering() {
     const [profile, setProfile] = useState([]);
+    const [password, setpassword] = useState(false)
 
     let history = useHistory()
     const [errors, setErrors] = useState('');
@@ -21,10 +22,8 @@ const Om = () => {
         email: "",
         phone: "",
         password: '',
-        profile:""
+        profile: ""
     })
-    const { id } = useParams()
-
     const validate = (event, name, value) => {
 
         switch (name) {
@@ -92,7 +91,6 @@ const Om = () => {
 
         }
     }
-
     const handleChange = (event) => {
         event.persist();
         let name = event.target.name;
@@ -103,56 +101,181 @@ const Om = () => {
             ...values,
             [name]: val,
         })
-        // setProfile
 
     }
-    const postdata =(e) => {
+    const handleonclick = () => {
+        setpassword(!password)
+    }
+    const handleonmousedown = () => {
+        setpassword(!password)
+    }
+    const postdata = (e) => {
         e.preventDefault()
         let FD = new FormData();
-            FD.append('username' , values.username)
-            FD.append('mobilenumber' , values.phone)
-            FD.append('email' , values.email)
-            FD.append('password' , values.password)
-            FD.append('photo' , profile[0])
-            console.log("ss",profile)
+        FD.append('username', values.username)
+        FD.append('mobilenumber', values.phone)
+        FD.append('email', values.email)
+        FD.append('password', values.password)
+        FD.append('photo', profile[0])
+        console.log("ss", profile)
 
-            console.log(FD)
-            axios.post("https://medicinesinfo.herokuapp.com/per", FD).then((res) => {
-                console.log("updare", res)
-            })
-            history.push('/')
-        }
-
-
-    
-    const paperStyle = { padding: '30px 20px', width: 300, margin: '20px auto' }
-
+        console.log(FD)
+        axios.post("https://medicinesinfo.herokuapp.com/per", FD).then((res) => {
+            console.log("updare", res)
+        })
+        history.push('/')
+    }
 
     return (
-        <div> {id}
-            <Grid>
+        <div>
+            <section class="vh-100" style={{ backgroundcolor: "#eee" }}>
+                <div class="container h-100">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-lg-12 col-xl-11">
+                            <div class="card text-black" style={{ borderradius: "25px" }}>
+                                <div class="card-body p-md-5">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                <Paper elevation={20} style={paperStyle}>
-                    <Grid align='center'>
-                        <h2> Registation Form</h2>
-                    </Grid>
-                    <form>
-                        <TextField name='username' fullWidth label='username' value={values.username} onChange={handleChange} error={Boolean(errors.username)} helperText={errors.username} />
-                        <TextField name='phone' fullWidth label='phone' value={values.phone} onChange={handleChange} error={Boolean(errors.phone)} helperText={errors.phone} />
-                        <TextField name='email' fullWidth label='Email' value={values.email} onChange={handleChange} error={Boolean(errors.email)} helperText={errors.email} />
-                        <TextField name='password' fullWidth label='password' value={values.password} onChange={handleChange} error={Boolean(errors.password)} helperText={errors.password} />
-                        <br />
-                        <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} />
+                                            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                        <br />
-                        <Grid align='center'>
-                            <Button type='submit' class='btn btn-info' onClick={postdata}>Submit</Button>
-                        </Grid>
-                    </form>
-                </Paper>
-            </Grid>
+                                            <form class="mx-1 mx-md-4">
+
+                                                <div class="d-flex flex-row align-items-center mb-4">
+                                                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                                    <div class="form-outline flex-fill mb-0">
+                                                        <TextField name='username'
+                                                            fullWidth label='username'
+                                                            variant='outlined'
+                                                            value={values.username}
+                                                            onChange={handleChange}
+                                                            error={Boolean(errors.username)}
+                                                            helperText={errors.username}
+                                                            InputProps={{
+                                                                endAdornment: (
+                                                                    <InputAdornment position='end'>
+                                                                        <IconButton>
+                                                                            <PersonIcon/>
+                                                                        </IconButton>
+                                                                    </InputAdornment>
+                                                                )
+                                                            }}
+                                                            
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex flex-row align-items-center mb-4">
+                                                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                                    <div class="form-outline flex-fill mb-0">
+                                                        <TextField name='phone'
+                                                            fullWidth label='phone'
+                                                            type='number'
+                                                            variant='outlined'
+                                                            value={values.phone}
+                                                            onChange={handleChange}
+                                                            error={Boolean(errors.phone)}
+                                                            helperText={errors.phone} 
+                                                                InputProps={{
+                                                                endAdornment: (
+                                                                    <InputAdornment position='end'>
+                                                                        <IconButton>
+                                                                        <PhoneIcon /> 
+                                                                        </IconButton>
+                                                                    </InputAdornment>
+                                                                )
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex flex-row align-items-center mb-4">
+                                                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                                    <div class="form-outline flex-fill mb-0">
+                                                        <TextField type="password"
+                                                            name='password'
+
+                                                            fullWidth label='password'
+                                                            variant="outlined"
+                                                            value={values.password}
+                                                            type={password ? 'text' : 'password'}
+                                                            onChange={handleChange}
+                                                            error={Boolean(errors.password)}
+                                                            helperText={errors.password}
+                                                            InputProps={{
+                                                                endAdornment: (
+                                                                    <InputAdornment position='end'>
+                                                                        <IconButton
+
+                                                                            onClick={handleonclick}
+                                                                            onMouseDown={handleonmousedown}
+                                                                        >
+                                                                            {password ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                                                        </IconButton>
+                                                                    </InputAdornment>
+                                                                )
+                                                            }} />
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-flex flex-row align-items-center mb-4">
+                                                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                                    <div class="form-outline flex-fill mb-0">
+                                                        <TextField name='email'
+                                                            fullWidth label='Email'
+                                                            variant="outlined"
+                                                            value={values.email}
+                                                            onChange={handleChange}
+                                                            error={Boolean(errors.email)}
+                                                            helperText={errors.email} 
+                                                                InputProps={{
+                                                                endAdornment: (
+                                                                    <InputAdornment position='end'>
+                                                                        <IconButton>
+                                                                            <EmailIcon/>
+                                                                        </IconButton>
+                                                                    </InputAdornment>
+                                                                )
+                                                            }}
+                                                            />
+
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex flex-row align-items-center mb-4">
+                                                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                                    <div class="form-outline flex-fill mb-0">
+                                                    </div>
+                                                    <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} />
+
+                                                </div>
+                                                <div class="form-check d-flex justify-content-center mb-5">
+                                                    <label class="form-check-label" for="form2Example3">
+                                                        I agree all statements in <a href="#!">Terms of service</a>
+                                                    </label>
+                                                </div>
+
+                                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                                    <button type="button" class="btn btn-primary btn-lg" onClick={postdata}>Register</button>
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+                                        <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
+
     )
 }
 
-export default Om
+export default Rendering

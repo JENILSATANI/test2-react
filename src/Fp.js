@@ -1,55 +1,41 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable default-case */
 /* eslint-disable no-useless-escape */
-import React,{useState} from 'react'
-import { Grid, Paper, TextField,IconButton,InputAdornment } from '@material-ui/core'
-import { Link , useHistory } from 'react-router-dom';
+import React, { useState } from 'react'
+import { Grid, Paper, TextField, IconButton, InputAdornment } from '@material-ui/core'
+import { Link, useHistory } from 'react-router-dom';
 import { omit } from 'lodash'
 import { Button } from 'react-bootstrap'
-import {axios} from 'axios'
+import axios from 'axios';
+import Snackbar from '@mui/material/Snackbar';
+import Slide from '@mui/material/Slide';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import {
-    Typography,
-    Stepper,
-    Step,
-    StepLabel,
-  } from "@material-ui/core";
-  import { makeStyles } from "@material-ui/core/styles";
-
-function Login() {
-
-    let history = useHistory()
+import EmailIcon from '@mui/icons-material/Email';
+function Log() {
+    const [open, setOpen] = React.useState(false);
+    const [transition, setTransition] = React.useState(undefined);
     const [password, setpassword] = useState(false)
-
+    let history = useHistory()
     const [errors, setErrors] = useState('');
     const [values, setValues] = useState({
         name: '',
         email: '',
-        phone: "",
+        phone: '',
         password: ''
     })
     const handleChange = (event) => {
         event.preventDefault();
         event.persist();
         let name = event.target.name;
-        let val = event.target.value;
-        validate(event, name, val);
+        let value = event.target.value;
+
+        validate(event, name, value);
         setValues({
             ...values,
-            [name]: val,
+            [name]: value,
         })
-    }
-    function postdata(e) {
-        e.preventDefault();
-            let item = {
-              email: values.email,
-              password: values.password
-            }
-        console.log(item)
-        axios.put("https://medicinesinfo.herokuapp.com/savepassword", item).then((res) => {
-          console.log("updare", res)
-        })
-        
     }
     const handleonclick = () => {
         setpassword(!password)
@@ -92,60 +78,98 @@ function Login() {
 
         }
     }
-    const paperStyle = { padding: '30px 20px', width: 300, margin: '20px auto' }
+    function postdata(e) {
+        e.preventDefault();
+        let item = {
+            email: values.email,
+            password: values.password
+        }
+        console.log(item)
+        axios.put("https://medicinesinfo.herokuapp.com/savepassword", item).then((res) => {
+            console.log("updare", res)
+            history.push('/')
+        })
 
+    }
     return (
         <div>
+            <section class="vh-100">
+                <div class="container py-5 h-100">
+                    <div class="row d-flex align-items-center justify-content-center h-100">
+                        <div class="col-md-8 col-lg-7 col-xl-6">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image" />
+                        </div>
+                        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                        <h5 className="fw-normal mb-3 pb-3" style={{ letterspacing: "1px" }}>Sign into your account</h5>
 
-            <Grid>
+                            <form>
+                                <div class="form-outline mb-4">
+                                    <TextField
+                                        id="outlined-basic"
+                                        fullWidth label='email'
+                                        name='email'
+                                        variant="outlined"
+                                        value={values.email}
+                                        onChange={handleChange}
+                                        error={Boolean(errors.email)}
+                                        helperText={errors.email}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position='end'>
+                                                    <IconButton>
+                                                        <EmailIcon />
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }}
+                                    />
+                                </div>
 
-                <Paper elevation={20} style={paperStyle}>
-                    <Grid align='center'>
-                        <h2>Forgot Password</h2>
-                    </Grid>
-                    <form>
-                        <TextField name='email'
-                            variant='filled'
-                            fullWidth label='Email'
-                            value={values.email}
-                            onChange={handleChange}
-                            error={Boolean(errors.email)}
-                            helperText={errors.email} 
-                            />
-                                     <TextField name='password'
-                            variant='filled'
-                            fullWidth label='password'
-                            value={values.password}
-                            type={password ? 'text' : 'password'}
-                            onChange={handleChange}
-                            error={Boolean(errors.password)}
-                            helperText={errors.password}
-                            InputProps={{
-                                endAdornment:(
-                                    <InputAdornment position='end'>
-                                        <IconButton
-                                        
-                                        onClick={handleonclick}
-                                        onMouseDown={handleonmousedown}
-                                        >
-                                        {password?<VisibilityIcon/>:<VisibilityOffIcon/>}
-                                        </IconButton>
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
-                              <br />
-                              <br/>
-                            <Grid align='center'>
-                                <Button type='submit' class='btn btn-info' onClick={postdata}>submit
-                                </Button>
-                            </Grid>
-                            
-                    </form>
-                    </Paper>
-                    </Grid>
+                                <div class="form-outline mb-4">
+                                    <TextField type="password"
+                                        name='password'
+
+                                        fullWidth label='password'
+                                        variant="outlined"
+                                        value={values.password}
+                                        type={password ? 'text' : 'password'}
+                                        onChange={handleChange}
+                                        error={Boolean(errors.password)}
+                                        helperText={errors.password}
+                                        InputProps={{
+                                            endAdornment: (
+                                                <InputAdornment position='end'>
+                                                    <IconButton
+
+                                                        onClick={handleonclick}
+                                                        onMouseDown={handleonmousedown}
+                                                    >
+                                                        {password ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            )
+                                        }} />
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={postdata}>Sign in</button>
+
+                                <div class="divider d-flex align-items-center my-4">
+                                    <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+                                </div>
+
+                                <a class="btn btn-primary btn-lg btn-block" style={{ backgroundcolor: "#3b5998" }} href="#!" role="button">
+                                    <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
+                                </a>
+                                <a class="btn btn-primary btn-lg btn-block" style={{ backgroundcolor: "#55acee" }} href="#!" role="button">
+                                    <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                )
+            </section>
+        </div>
+    )
 }
 
-                export default Login
+export default Log
