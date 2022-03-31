@@ -2,6 +2,8 @@
 /* eslint-disable default-case */
 /* eslint-disable no-useless-escape */
 import React, { useState } from 'react'
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+
 import { Grid, Paper, TextField, IconButton, InputAdornment } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom';
 import { omit } from 'lodash'
@@ -13,9 +15,29 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
 function Log() {
+    const clientId = "420930169407-cmggmaogov821g8ok2ge28hjde447oim.apps.googleusercontent.com";
+
     const [open, setOpen] = React.useState(false);
     const [transition, setTransition] = React.useState(undefined);
     const [password, setpassword] = useState(false)
+    const [showloginButton, setShowloginButton] = useState(true);
+    const [showlogoutButton, setShowlogoutButton] = useState(false);
+    const onLoginSuccess = (res) => {
+        console.log('Login Success:', res.profileObj);
+        setShowloginButton(false);
+        setShowlogoutButton(true);
+    };
+
+    const onLoginFailure = (res) => {
+        console.log('Login Failed:', res);
+    };
+
+    const onSignoutSuccess = () => {
+        alert("You have been logged out successfully");
+        console.clear();
+        setShowloginButton(true);
+        setShowlogoutButton(false);
+    };
     let history = useHistory()
     const [errors, setErrors] = useState('');
     const [values, setValues] = useState({
@@ -102,6 +124,7 @@ function Log() {
         history.push('/Otp')
     }
     return (
+
         <div>
             <section className="vh-100" style={{ backgroundcolor: "#9A616D" }}>
                 <div className="container py-5 h-100">
@@ -211,6 +234,28 @@ function Log() {
                                                     </Grid>
                                                     <div className="pt-1 mb-4">
                                                         <button className="btn btn-dark btn-lg btn-block" type="button" onClick={postdata}>Login</button>
+                                                    </div>
+                                                    <div className="pt-1 mb-4">
+                                                        {showloginButton ?
+                                                            <GoogleLogin
+                                                                className="btn btn-dark btn-lg btn-block"
+                                                                type="button"
+                                                                clientId={clientId}
+                                                                buttonText="Login With Google "
+                                                                onSuccess={onLoginSuccess}
+                                                                onFailure={onLoginFailure}
+                                                                cookiePolicy={'single_host_origin'}
+                                                                isSignedIn={true}
+                                                            /> : null}
+
+                                                        {showlogoutButton ?
+                                                            <GoogleLogout
+                                                                clientId={clientId}
+                                                                buttonText="Sign Out"
+                                                                onLogoutSuccess={onSignoutSuccess}
+                                                            >
+                                                            </GoogleLogout> : null
+                                                        }
                                                     </div>
                                                     <a className="small text-muted" href="Fp">Forgot password?</a>
                                                     <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>Don't have an account? <a href="reg" style={{ color: "#393f81" }}>Register here</a></p>
