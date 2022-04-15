@@ -18,7 +18,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
 import Swal from 'sweetalert2'
 function Log() {
-    const clientId = "632665382854-uab0h1a4rva0ji229278484sopsiks5e.apps.googleusercontent.com"
+    const clientId = "632665382854-f7mjmj6m7cjdsnucjcfl7d8dugdcs5tp.apps.googleusercontent.com"
     const [password, setpassword] = useState(false)
     const [email, setemail] = useState("")
     const [error, setError] = useState("");
