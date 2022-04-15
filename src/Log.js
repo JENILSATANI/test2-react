@@ -279,7 +279,7 @@ function Log() {
                                                 <div className="pt-1 mb-4">
                                                     <button className="btn btn-dark btn-lg btn-block" type="submit">Login</button>
                                                 </div>
-                                                <div className="pt-1 mb-4">
+                                                {/* <div className="pt-1 mb-4">
                                                     <GoogleLogin
                                                         clientId={clientId}
                                                         buttonText="Log in with Google"
@@ -288,7 +288,7 @@ function Log() {
                                                         cookiePolicy={'single_host_origin'}
                                                     />
 
-                                                </div>
+                                                </div> */}
                                                 <h4><a className="small text-muted" href="Fp">Forgot password?</a></h4>
                                                 <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>Don't have an account? <a href="reg" style={{ color: "#393f81" }}>Register here</a></p>
                                                 <a href="#!" className="small text-muted">Terms of use.</a>
