@@ -131,7 +131,7 @@ function Log() {
         const req = {
             token: googleData.tokenId
         }
-        axios.post("https://medicineplus.herokuapp.com/google", req).then((res) => {
+        axios.post("https://medicinesinfo.herokuapp.com/google", req).then((res) => {
             console.log("updare", res)
             if (res.data.success === true) {
                 localStorage.setItem("token", res.data.token)
@@ -158,7 +158,7 @@ function Log() {
                 password: values.password
             }
             console.log(item)
-            axios.post("https://medicineplus.herokuapp.com/login", item).then((res) => {
+            axios.post("https://medicinesinfo.herokuapp.com/login", item).then((res) => {
                 console.log("updare", res)
                 if (res.data.success === true) {
                     localStorage.setItem("token", res.data.token)
