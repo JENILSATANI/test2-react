@@ -112,7 +112,7 @@ function Rendering() {
     }
     const postdata = (e) => {
         e.preventDefault()
-        if(values.password==='' || profile.length > 0){
+        if(values.password===''){
             Swal.fire({
                 icon: 'warning',
                 title: 'Oops...',
