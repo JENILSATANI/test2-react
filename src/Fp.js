@@ -100,7 +100,7 @@ function Log() {
                             <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image" />
                         </div>
                         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                        <h5 className="fw-normal mb-3 pb-3" style={{ letterspacing: "1px" }}>Sign into your account</h5>
+                        <h5 className="fw-normal mb-3 pb-3" style={{ letterspacing: "1px" }}>Forget Your Password</h5>
 
                             <form>
                                 <div class="form-outline mb-4">
@@ -151,18 +151,7 @@ function Log() {
                                         }} />
                                 </div>
 
-                                <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={postdata}>Sign in</button>
-
-                                <div class="divider d-flex align-items-center my-4">
-                                    <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
-                                </div>
-
-                                <a class="btn btn-primary btn-lg btn-block" style={{ backgroundcolor: "#3b5998" }} href="#!" role="button">
-                                    <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
-                                </a>
-                                <a class="btn btn-primary btn-lg btn-block" style={{ backgroundcolor: "#55acee" }} href="#!" role="button">
-                                    <i class="fab fa-twitter me-2"></i>Continue with Twitter</a>
-
+                                <button type="submit" class="btn btn-primary btn-lg btn-block" onClick={postdata}>Submit</button>
                             </form>
                         </div>
                     </div>

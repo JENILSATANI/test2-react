@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react/jsx-no-duplicate-props */
 /* eslint-disable default-case */
 /* eslint-disable no-useless-escape */
 import React, { useState } from 'react'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import Alert from '@mui/material/Alert';
 
 import { Grid, Paper, TextField, IconButton, InputAdornment } from '@material-ui/core'
 import { Link, useHistory } from 'react-router-dom';
@@ -14,12 +16,13 @@ import Slide from '@mui/material/Slide';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import EmailIcon from '@mui/icons-material/Email';
+import Swal from 'sweetalert2'
 function Log() {
-    const clientId = "420930169407-cmggmaogov821g8ok2ge28hjde447oim.apps.googleusercontent.com";
-
-    const [open, setOpen] = React.useState(false);
-    const [transition, setTransition] = React.useState(undefined);
+    const clientId = "632665382854-uab0h1a4rva0ji229278484sopsiks5e.apps.googleusercontent.com"
     const [password, setpassword] = useState(false)
+    const [email, setemail] = useState("")
+    const [error, setError] = useState("");
+
     const [showloginButton, setShowloginButton] = useState(true);
     const [showlogoutButton, setShowlogoutButton] = useState(false);
     const onLoginSuccess = (res) => {
@@ -99,170 +102,204 @@ function Log() {
 
         }
     }
-    function postdata(e) {
+    // function postdata(e) {
 
-        e.preventDefault();
-        let item = {
-            email: values.email,
-            password: values.password
-        }
-        console.log(item)
-        axios.post("https://medicinesinfo.herokuapp.com/login", item).then((res) => {
-            console.log("updare", res)
-            if (res.data.success === true) {
-                localStorage.setItem("token", res.data.token)
-                // history.push('/Userlist')
-                window.location.reload(true);
-            }
-        })
+    //     e.preventDefault();
+    //     let item = {
+    //         email: values.email,
+    //         password: values.password
+    //     }
+    //     console.log(item)
+    //     axios.post("http://localhost:9900/login", item).then((res) => {
+    //         console.log("updare", res)
+    //         if (res.data.success === true) {
+    //             localStorage.setItem("token", res.data.token)
+    //             // history.push('/Userlist')
+    //             window.location.reload(true);
+    //         }
+    //     })
 
-    }
+    // }
     function changedata() {
         history.push('/')
     }
     function otpdta() {
         history.push('/Otp')
     }
+    const handleLogin = async googleData => {
+        console.log("ss", googleData)
+        const req = {
+            token: googleData.tokenId
+        }
+        axios.post("https://medicinesinfo.herokuapp.com/google", req).then((res) => {
+            console.log("updare", res)
+            if (res.data.success === true) {
+                localStorage.setItem("token", res.data.token)
+                // history.push('/Mlist')
+                window.location.reload(true);
+            }
+        })
+    }
+
+    function submitdata(e) {
+        e.preventDefault();
+        console.log("ss")
+        if (values.email === '' || values.password === '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                footer: '<a href="">Enter Email and Password?</a>'
+            })
+        } else {
+
+            let item = {
+                email: values.email,
+                password: values.password
+            }
+            console.log(item)
+            axios.post("https://medicinesinfo.herokuapp.com/login", item).then((res) => {
+                console.log("updare", res)
+                if (res.data.success === true) {
+                    localStorage.setItem("token", res.data.token)
+                    Swal.fire(
+                        'Login Successfull!',
+                        'success'
+                    )
+                    setTimeout(() => {
+                        window.location.reload(true);
+                    }, 2000);
+                }
+            })
+        }
+    }
+
+
     return (
 
         <div>
-            <section className="vh-100" style={{ backgroundcolor: "#9A616D" }}>
-                <div className="container py-5 h-100">
-                    <div className="row d-flex align-items-center justify-content-center h-100">
-                        <div className="col col-xl-10">
-                            <div className="card" style={{ borderradius: "1rem" }}>
-                                <div className="row g-0">
-                                    <div className="col-md-6 col-lg-5 d-none d-md-block">
-                                        <img
-                                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                                            alt="login form"
-                                            className="img-fluid" style={{ borderradius: "1rem 0 0 1rem" }}
-                                        />
-                                    </div>
-                                    <div className="col-md-6 col-lg-7 d-flex align-items-center">
-                                        <div className="card-body p-4 p-lg-5 text-black">
-                                            <Grid>
+            <section class="vh-100" style={{ backgroundcolor: "#eee" }}>
+                <div class="container h-100">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-lg-12 col-xl-11">
+                            <div class="card text-black" style={{ borderradius: "25px" }}>
+                                <div class="card-body p-md-5">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                                                <form>
+                                            <form onSubmit={submitdata}>
+                                
+                                                <div className="d-flex align-items-center ">
+                                                    {/* <i className="fas fa-cubes fa-2x me-3" style={{ color: "#ff6219" }}></i> */}
+                                                    <span className="h3 fw-bold  " style={{textalign: "center" }}>Medicine Management App</span>
+                                                </div>
+                                                {/* <h6 className="fw-normal" style={{ letterspacing: "1px" }}>Sign into your account</h6> */}
+                                                <br/>
+                                                <div class="row d-flex justify-content-center align-items-center h-100" style={{ margin: "20" }}>
 
-                                                    <div className="d-flex align-items-center mb-3 pb-1">
-                                                        <i className="fas fa-cubes fa-2x me-3" style={{ color: "#ff6219" }}></i>
-                                                        <span className="h1 fw-bold mb-0">Medicine Management App</span>
+                                                    <h6 class="mb-0 me-4">Login With:</h6>
+
+                                                    <div class="form-check form-check-inline mb-0 me-4">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="inlineRadioOptions"
+                                                            value={1}
+                                                            onClick={(e) => changedata(e.target.value)}
+                                                        />
+                                                        <label class="form-check-label" for="EmailUser">Email</label>
                                                     </div>
-                                                    <h5 className="fw-normal mb-3 pb-3" style={{ letterspacing: "1px" }}>Sign into your account</h5>
-                                                    <br />
-                                                    <div class="row d-flex justify-content-center align-items-center h-100" style={{ margin: "20" }}>
 
-                                                        <h5 class="mb-0 me-4">Login With:</h5>
-
-                                                        <div class="form-check form-check-inline mb-0 me-4">
-                                                            <input
-                                                                class="form-check-input"
-                                                                type="radio"
-                                                                name="inlineRadioOptions"
-                                                                value={1}
-                                                                onClick={(e) => changedata(e.target.value)}
-                                                            />
-                                                            <label class="form-check-label" for="EmailUser">Email</label>
-                                                        </div>
-
-                                                        <div class="form-check form-check-inline mb-0 me-6">
-                                                            <input
-                                                                class="form-check-input"
-                                                                type="radio"
-                                                                name="inlineRadioOptions"
-                                                                value={2}
-                                                                onClick={(e) => otpdta(e.target.value)}
+                                                    <div class="form-check form-check-inline mb-0 me-6">
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="radio"
+                                                            name="inlineRadioOptions"
+                                                            value={2}
+                                                            onClick={(e) => otpdta(e.target.value)}
 
 
-                                                            />
-                                                            <label class="form-check-label" for="maleGender">MobileNumber</label>
-                                                        </div>
+                                                        />
+                                                        <label class="form-check-label" for="maleGender">MobileNumber</label>
                                                     </div>
-                                                    <br />
+                                                </div>
+                                                <br />
 
 
+
+                                                <div className="form-outline mb-4">
+                                                    <TextField
+                                                        id="outlined-basic"
+                                                        fullWidth label='email'
+                                                        name='email'
+                                                        variant="outlined"
+                                                        value={values.email}
+                                                        onChange={handleChange}
+                                                        error={Boolean(errors.email)}
+                                                        helperText={errors.email}
+                                                        InputProps={{
+                                                            endAdornment: (
+                                                                <InputAdornment position='end'>
+                                                                    <IconButton>
+                                                                        <EmailIcon />
+                                                                    </IconButton>
+                                                                </InputAdornment>
+                                                            )
+                                                        }}
+                                                    />
+                                                </div>
+                                                <Grid>
 
                                                     <div className="form-outline mb-4">
-                                                        <TextField
-                                                            id="outlined-basic"
-                                                            fullWidth label='email'
-                                                            name='email'
+                                                        <TextField type="password"
+                                                            name='password'
+
+                                                            fullWidth label='password'
                                                             variant="outlined"
-                                                            value={values.email}
+                                                            value={values.password}
+                                                            type={password ? 'text' : 'password'}
                                                             onChange={handleChange}
-                                                            error={Boolean(errors.email)}
-                                                            helperText={errors.email}
+                                                            error={Boolean(errors.password)}
+                                                            helperText={errors.password}
                                                             InputProps={{
                                                                 endAdornment: (
                                                                     <InputAdornment position='end'>
-                                                                        <IconButton>
-                                                                            <EmailIcon />
+                                                                        <IconButton
+
+                                                                            onClick={handleonclick}
+                                                                            onMouseDown={handleonmousedown}
+                                                                        >
+                                                                            {password ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                                                         </IconButton>
                                                                     </InputAdornment>
                                                                 )
-                                                            }}
-                                                        />
+                                                            }} />
                                                     </div>
-                                                    <Grid>
+                                                </Grid>
+                                                <div className="pt-1 mb-4">
+                                                    <button className="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                                                </div>
+                                                <div className="pt-1 mb-4">
+                                                    <GoogleLogin
+                                                        clientId={clientId}
+                                                        buttonText="Log in with Google"
+                                                        onSuccess={handleLogin}
+                                                        onFailure={handleLogin}
+                                                        cookiePolicy={'single_host_origin'}
+                                                    />
 
-                                                        <div className="form-outline mb-4">
-                                                            <TextField type="password"
-                                                                name='password'
+                                                </div>
+                                                <h4><a className="small text-muted" href="Fp">Forgot password?</a></h4>
+                                                <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>Don't have an account? <a href="reg" style={{ color: "#393f81" }}>Register here</a></p>
+                                                <a href="#!" className="small text-muted">Terms of use.</a>
+                                                <a href="#!" className="small text-muted">Privacy policy</a>
+                                            </form>
 
-                                                                fullWidth label='password'
-                                                                variant="outlined"
-                                                                value={values.password}
-                                                                type={password ? 'text' : 'password'}
-                                                                onChange={handleChange}
-                                                                error={Boolean(errors.password)}
-                                                                helperText={errors.password}
-                                                                InputProps={{
-                                                                    endAdornment: (
-                                                                        <InputAdornment position='end'>
-                                                                            <IconButton
+                                        </div>
+                                        <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                                                                onClick={handleonclick}
-                                                                                onMouseDown={handleonmousedown}
-                                                                            >
-                                                                                {password ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                                                            </IconButton>
-                                                                        </InputAdornment>
-                                                                    )
-                                                                }} />
-                                                        </div>
-                                                    </Grid>
-                                                    <div className="pt-1 mb-4">
-                                                        <button className="btn btn-dark btn-lg btn-block" type="button" onClick={postdata}>Login</button>
-                                                    </div>
-                                                    <div className="pt-1 mb-4">
-                                                        {showloginButton ?
-                                                            <GoogleLogin
-                                                                className="btn btn-dark btn-lg btn-block"
-                                                                type="button"
-                                                                clientId={clientId}
-                                                                buttonText="Login With Google "
-                                                                onSuccess={onLoginSuccess}
-                                                                onFailure={onLoginFailure}
-                                                                cookiePolicy={'single_host_origin'}
-                                                                isSignedIn={true}
-                                                            /> : null}
+                                            <img src="https://www.softermii.com/assets/uploads/blog/20220406/cover-big.webp" class="img-fluid" alt="Sample image" />
 
-                                                        {showlogoutButton ?
-                                                            <GoogleLogout
-                                                                clientId={clientId}
-                                                                buttonText="Sign Out"
-                                                                onLogoutSuccess={onSignoutSuccess}
-                                                            >
-                                                            </GoogleLogout> : null
-                                                        }
-                                                    </div>
-                                                    <a className="small text-muted" href="Fp">Forgot password?</a>
-                                                    <p className="mb-5 pb-lg-2" style={{ color: "#393f81" }}>Don't have an account? <a href="reg" style={{ color: "#393f81" }}>Register here</a></p>
-                                                    <a href="#!" className="small text-muted">Terms of use.</a>
-                                                    <a href="#!" className="small text-muted">Privacy policy</a>
-                                                </form>
-                                            </Grid>
                                         </div>
                                     </div>
                                 </div>
@@ -271,7 +308,7 @@ function Log() {
                     </div>
                 </div>
             </section>
-        </div>
+        </div >
     )
 }
 

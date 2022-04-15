@@ -8,6 +8,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import MailIcon from '@mui/icons-material/Mail';
 import PhoneIcon from '@mui/icons-material/Phone';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import Swal from 'sweetalert2';
 export default function Pp() {
     const { id } = useParams();
     let history = useHistory();
@@ -16,16 +17,27 @@ export default function Pp() {
     const [phonenumber, setphonenumber] = useState("");
     const [profile, setProfile] = useState([]);
     useEffect(() => {
-        data()
+        // data()
+        google()
     }, [])
 
 
+    function google() {
+        let token = localStorage.getItem("token");
 
+        axios.get(`https://medicinesinfo.herokuapp.com/loginwithgoogle`, { headers: { 'x-access-token': token } }).then((res) => {
+            setName(res.data.data[0].username)
+            setemail(res.data.data[0].email)
+            setProfile(res.data.data[0].photo_path)
+            setphonenumber(res.data.data[0].mobilenumber)
+            console.log("hbhj", res)
+        })
+    }
 
     function data() {
         let token = localStorage.getItem("token");
 
-        axios.get(`https://medicinesinfo.herokuapp.com/user`, { headers: { 'x-access-token': token } }).then((res) => {
+        axios.get(`http://localhost:9900/user`, { headers: { 'x-access-token': token } }).then((res) => {
             setName(res.data.data.username)
             setemail(res.data.data.email)
             setphonenumber(res.data.data.mobilenumber)
@@ -48,18 +60,34 @@ export default function Pp() {
 
     }
     function logout() {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-start',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Logout is successfully'
+        })
         localStorage.clear()
         setTimeout(() => {
             window.location.reload(true);
-
-        }, 1000);
+        }, 3000);
     }
 
     return (
         <div>
-
+            <br />
             <div className='Container'>
-                <img src={profile} alt='' height='200' width='200'className='img-fluid rounded' ></img>
+                <img src={profile} alt='' height='200' width='200' className='img-fluid rounded' ></img>
+                <br />
                 <br />
                 <form>
                     <div>
@@ -117,12 +145,12 @@ export default function Pp() {
                         />
                     </div>
                     <br />
-                    <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} />
+                    {/* <input placeholder='profile' type='file' name='photo' onChange={(e) => setProfile(e.target.files)} /> */}
 
                     <br />
                     <br />
 
-                    <Button onClick={postData} className="bg-success" type='submit'>Submit</Button><span/>
+                    {/* <Button onClick={postData} className="bg-success" type='submit'>Submit</Button><span/> */}
                     <Button className="bg-primary" onClick={logout}>Logout</Button>
 
                 </form>

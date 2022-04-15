@@ -49,10 +49,10 @@ function Otp() {
         console.log(item)
         axios.post("https://medicinesinfo.herokuapp.com/otp", item).then((res) => {
             console.log("updare", res)
-            if (res.data.success === true) {
-                localStorage.setItem("token", res.data.token)
-                window.location.reload(true);
-            }
+
+            localStorage.setItem("mobile", values.phone);
+
+            history.push('/Notp')
         })
 
     }
@@ -143,7 +143,7 @@ function Otp() {
 
                                                         fullWidth label='password'
                                                         variant="outlined"
-                                                        value={values.password}
+                                                        // value={values.password}
                                                         type={password ? 'text' : 'password'}
                                                         onChange={handleChange}
                                                         error={Boolean(errors.password)}
@@ -160,10 +160,11 @@ function Otp() {
                                                                     </IconButton>
                                                                 </InputAdornment>
                                                             )
-                                                        }} />
+                                                        }}
+                                                    />
                                                 </div>
                                                 <div class="form-outline mb-4">
-                                                    <button className="btn btn-dark " type="button" onClick={postdata}>Login</button>
+                                                    <button className="btn btn-dark " type="button" onClick={postdata}>send otp</button>
                                                 </div>
 
                                             </form>

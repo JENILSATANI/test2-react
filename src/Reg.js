@@ -11,6 +11,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
+import Swal from 'sweetalert2'
 function Rendering() {
     const [profile, setProfile] = useState([]);
     const [password, setpassword] = useState(false)
@@ -111,19 +112,36 @@ function Rendering() {
     }
     const postdata = (e) => {
         e.preventDefault()
-        let FD = new FormData();
-        FD.append('username', values.username)
-        FD.append('mobilenumber', values.phone)
-        FD.append('email', values.email)
-        FD.append('password', values.password)
-        FD.append('photo', profile[0])
-        console.log("ss", profile)
-
-        console.log(FD)
-        axios.post("https://medicinesinfo.herokuapp.com/per", FD).then((res) => {
-            console.log("updare", res)
-        })
-        history.push('/')
+        if(values.password==='' || profile.length > 0){
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                footer: 'First Add all data ?'
+              })
+        }else{
+            let FD = new FormData();
+            FD.append('username', values.username)
+            FD.append('mobilenumber', values.phone)
+            FD.append('email', values.email)
+            FD.append('password', values.password)
+            FD.append('photo', profile[0])
+            console.log("ss", profile)
+    
+            console.log(FD)
+            axios.post("https://medicinesinfo.herokuapp.com/per", FD).then((res) => {
+                console.log("updare", res)
+            })
+            Swal.fire(
+                'Good job!',
+                'Register Successfull!',
+                'success'
+            )
+            setTimeout(() => {
+                history.push('/')
+            }, 2000);
+        }
+   
     }
 
     return (
@@ -263,7 +281,7 @@ function Rendering() {
                                         </div>
                                         <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp" class="img-fluid" alt="Sample image" />
+                                            <img src="https://www.softermii.com/assets/uploads/blog/20220408/cover-big.webp" class="img-fluid" alt="Sample image" />
 
                                         </div>
                                     </div>

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useHistory, useParams } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import { TextField } from '@material-ui/core';
+import Swal from 'sweetalert2';
 export default function Pp() {
     const { id } = useParams();
     let history = useHistory();
@@ -16,7 +17,29 @@ export default function Pp() {
 
  
 
-    const postData = () => {
+    // const postData = () => {
+    //     let FD = new FormData();
+    //     FD.append('name', name);
+    //     FD.append('quantities', quantities);
+    //     FD.append('description', description)
+    //     FD.append('price', price);
+    //     FD.append('photo', profile[0]);
+    //     console.log("profile", profile);
+    //     axios.post('http://localhost:9900/adduser', FD)
+    //     history.push('/Mlist')
+
+    // }
+ const onsubmit = (e) =>{
+     e.preventDefault()
+     if(name === '' || profile === '' ){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href="">Add Right Medicine?</a>'
+        })
+     }
+     else{
         let FD = new FormData();
         FD.append('name', name);
         FD.append('quantities', quantities);
@@ -26,13 +49,12 @@ export default function Pp() {
         console.log("profile", profile);
         axios.post('https://medicinesinfo.herokuapp.com/adduser', FD)
         history.push('/Mlist')
-
-    }
-
+     }
+ }
     return (
         <div>
             <div className='Container'>
-                <form>
+                <form onSubmit={onsubmit}>
                     <div>
                         <TextField value={name}
                             onChange={(e) => setName(e.target.value)}
@@ -69,7 +91,7 @@ export default function Pp() {
                     <br />
                     <br />
 
-                    <Button onClick={postData} type='submit'>Submit</Button>
+                    <Button type='submit'>Submit</Button>
                 </form>
             </div>
         </div>

@@ -1,10 +1,9 @@
 import './App.css';
+import './Userlist.css'
 import './List.css'
-import Rendering from './Rendering'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Reg from './Reg'
 import Fp from './Fp'
-import For from './For';
 import Profile from './Profile';
 import Mlist from './Mlist'
 import Am from './Am'
@@ -13,7 +12,9 @@ import Editmedision from './Editmedision';
 import Logout from './Logout';
 import Log from './Log';
 import Otp from './Otp';
-
+import Notp from './Notp'
+// import Cart from './Cart'
+import Dd from './Dd';
 const currentUserSubject = localStorage.getItem('token');
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -57,10 +58,10 @@ const PublicRoute = ({ component: Component, ...rest }) => (
 function App() {
   return (
     <div className="App">
-        {/* <Rendering/> */}
+      {/* <Cart/> */}
       <Router>
         <Switch>
-        
+
           <PublicRoute exact path='/' component={Log} />
           <PublicRoute path='/reg' component={Reg} />
           <PublicRoute path='/Fp' component={Fp} />
@@ -71,6 +72,10 @@ function App() {
           <PrivateRoute path='/Userlist' component={Userlist} />
           <PrivateRoute path='/Editmedicine/:id' component={Editmedision} />
           <PrivateRoute path='/Logout' component={Logout} />
+          <PublicRoute path='/Notp' component={Notp} />
+          <PrivateRoute path='/Dd' component={Dd} />
+
+
 
 
         </Switch>

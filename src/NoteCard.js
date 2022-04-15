@@ -1,51 +1,67 @@
-import { Grid, Card, CardActions, CardContent, CardHeader, IconButton } from '@material-ui/core'
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { Grid, Card, CardActions, Button, CardContent, CardHeader, IconButton } from '@material-ui/core'
 import { DeblurOutlined, DeleteOutline, Favorite } from '@mui/icons-material'
 import { Typography } from '@mui/material'
-import React from 'react'
+import React,{useState} from 'react'
 import { styled } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
+import { red ,pink} from '@mui/material/colors';
 import Avatar from '@mui/material/Avatar';
-import { Link, useHistory} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import {useCart} from 'react-use-cart';
+import { add } from 'lodash';
+import { typography } from '@mui/system';
+const NoteCard= ({note, handleclick,additem}) =>{
+    let history = useHistory()
+    const [myArray, setMyArray] = useState([]);
 
-function NoteCard({ note, handleclick }) {
+    const [itemCount, setItemCount] = React.useState(1);
+        //  const {additem} = useCart
+        function addmedicine(){
+            history.push('/addmedicine')
+        }
     return (
         <div>
-           
             <Card style={{ width: "100%", height: "100%" }}>
-                
+
+                    <Avatar sx={{ bgcolor: pink[500] }} aria-label="recipe">
+                        M
+                    </Avatar>
                 <CardHeader
-                    avatar={
-                        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                            M
-                        </Avatar>
-                    }
-                    action={
-                        <IconButton onClick={() => handleclick(note._id)}>
-                            <DeleteOutline />
-                        </IconButton>
-                    }
+                    // action={
+                    //     <IconButton onClick={() => handleclick(note._id)}>
+                    //         <DeleteOutline />
+                    //     </IconButton>
+                    // }
                     title={note.name}
                 />
 
-                <CardContent>   
+                <CardContent>
                     <Typography>
-                        <img src={note.photo_path} alt='' style={{ width: 120, height: 100}}  />
-                    </Typography><Typography>
+                        <img src={note.photo_path} alt='' style={{ width: "227px" ,height: "164px" }} />
+                    </Typography>
+                    <br/>
+                    <Typography style={{backgroundColor:"ButtonHighlight", fontStyle:"italic"}}>
                         {note.description}
                     </Typography>
-                    <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
+                    <br/>
+                    <Typography style={{fontSize:"25px"}} color="text.primary" gutterBottom>
 
-                        price: {note.price}
+                        price:{note.price}
                     </Typography>
                 </CardContent>
                 <CardActions>
-                <Grid align='center'>
-                            <Link to='/addmedicine' style={{background:"black"}}>AddMedicine</Link>
-                        </Grid>
-                             <Grid align='center'>
-                            <Link to='/Profile'style={{background:"black"}}>Back</Link>
-                        </Grid>
-                </CardActions>   
+                    <Grid align='center'>
+                    <button className='btn btn-success'onClick={addmedicine}>Add Medicine</button>
+                    </Grid>
+                    <Grid align='center'>
+                   <button className='btn btn-success' onClick={() => additem(note)}>Add to Cart</button>
+                    </Grid>
+                </CardActions>
 
             </Card>
 
