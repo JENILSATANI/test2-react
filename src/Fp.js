@@ -87,8 +87,8 @@ function Log() {
         console.log(item)
         axios.put("https://medicinesinfo.herokuapp.com/savepassword", item).then((res) => {
             console.log("updare", res)
-            window.location.reload(true)
-            // history.push('/')
+            // window.location.reload(true)
+            history.push('/')
         })
 
     }
